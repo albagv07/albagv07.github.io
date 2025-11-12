@@ -27,39 +27,38 @@
     function draw() {
       background(135, 206, 235); // Cielo azul
 
-      // Dibuja el suelo
+      suelo
       fill(34, 139, 34);
       rect(0, 300, 600, 100);
 
-      // Dibuja la casa
+      casa
       fill(210, 180, 140);
       rect(200, 200, 200, 120); // Cuerpo de la casa
 
-      // Ventanas
+     
       fill(173, 216, 230);
       rect(220, 220, 40, 40);
       rect(340, 220, 40, 40);
 
-      // Puerta
+     
       fill(139, 69, 19);
       rect(280, 250, 40, 70);
 
-      // Techo
       fill(178, 34, 34);
       triangle(180, 200, 400, 200, 290, 130);
 
-      // Mover y dibujar el sol
+     
       fill(255, 223, 0);
-      ellipse(x, y, d, d); // Dibuja el sol
+      ellipse(x, y, d, d); 
 
-      // Actualiza la posición del sol
       x = x + v;  // Movimiento horizontal
 
       // Si el sol sale del lienzo por la derecha, vuelve a entrar por la izquierda
       if (x > width + r) {
-        x = -r; // Resetea la posición del sol a la izquierda
+        x = -r;
       }
     }
   </script>
   </body>
+
 </html>
