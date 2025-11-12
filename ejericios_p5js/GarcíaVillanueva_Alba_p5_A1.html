@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Movimiento del Sol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  </head>
+  <body>
+  <script>
+    let x, y, v, d, r;
+
+    function setup() {
+      createCanvas(600, 400);
+      background(135, 206, 235); // Cielo azul
+      noStroke();
+
+      // Inicialización del sol
+      d = 80; // Diámetro del sol
+      r = d / 2; // Radio del sol
+      x = -r;  // El sol comienza fuera de la pantalla a la izquierda
+      y = 80;  // Posición fija en el eje vertical (cerca de la parte superior)
+
+      v = 2;  // Velocidad del sol (puedes ajustar este valor para hacerlo más rápido o más lento)
+    }
+
+    function draw() {
+      background(135, 206, 235); // Cielo azul
+
+      // Dibuja el suelo
+      fill(34, 139, 34);
+      rect(0, 300, 600, 100);
+
+      // Dibuja la casa
+      fill(210, 180, 140);
+      rect(200, 200, 200, 120); // Cuerpo de la casa
+
+      // Ventanas
+      fill(173, 216, 230);
+      rect(220, 220, 40, 40);
+      rect(340, 220, 40, 40);
+
+      // Puerta
+      fill(139, 69, 19);
+      rect(280, 250, 40, 70);
+
+      // Techo
+      fill(178, 34, 34);
+      triangle(180, 200, 400, 200, 290, 130);
+
+      // Mover y dibujar el sol
+      fill(255, 223, 0);
+      ellipse(x, y, d, d); // Dibuja el sol
+
+      // Actualiza la posición del sol
+      x = x + v;  // Movimiento horizontal
+
+      // Si el sol sale del lienzo por la derecha, vuelve a entrar por la izquierda
+      if (x > width + r) {
+        x = -r; // Resetea la posición del sol a la izquierda
+      }
+    }
+  </script>
+  </body>
+</html>
