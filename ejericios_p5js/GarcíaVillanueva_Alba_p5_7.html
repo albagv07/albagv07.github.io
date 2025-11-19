@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>T7 · v4 — Todo junto</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    </head>
+
+    <body>
+        <script>
+            let x_s, y_s, v_s, d_s, r_s;
+            let x_cs, adelanto_s;
+
+            let x_l, y_l, v_l, d_l, r_l;
+            let x_cl, adelanto_l;
+
+            let xG, yG, vyG, Sg, cuerda;
+
+            let S, troncoW, troncoH, copaD;
+
+            let xC, vxC, L, H, wheelD;
+
+            function setup() {
+                createCanvas(600, 600);
+                // Tamaños sol y luna
+                d_s = width * 0.15;
+                r_s = 0.5 * d_s;
+                d_l = height * 0.3;
+                r_l = 0.5 * d_l;
+
+                // Posiciones iniciales
+                x_s = -r_s;
+                y_s = height * 0.35;
+
+                x_l = -width - r_l;
+                y_l = height * 0.55;
+
+                // Velocidades de astros
+                v_s = width / 800;
+                v_l = v_s;
+
+                // Adelantos de cielos
+                adelanto_s = width * 0.1;
+                adelanto_l = width * 0.1;
+
+                x_cs = x_s + adelanto_s;
+                x_cl = x_l + adelanto_l;
+
+                // Globo (estado + tamaños)
+                Sg = 0.08 * height;
+                cuerda = 1.2 * Sg;
+
+                xG = 0.5 * width;
+                yG = 0.8 * height;
+                vyG = 0.002 * height;
+
+                // Árbol (escala + derivadas)
+                S = 0.1 * height;
+                troncoW = 0.3 * S;
+                troncoH = 1.2 * S;
+                copaD = 1.1 * S;
+
+                // Coche
+                L = 0.12 * height;
+                H = 0.4 * L;
+                wheelD = 0.25 * L;
+
+                xC = -L;
+                vxC = width / 500;
+            }
+
+            function draw() {
+                // Fondo base
+                background(20, 20, 30);
+                noStroke();
+
+                // Cielo del sol
+                fill(0, 0, 200);
+                rect(x_cs, 0, width, 0.8 * height);
+
+                // Cielo de la luna
+                fill(200);
+                rect(x_cl, 0, width, 0.8 * height);
+
+                // Suelo
+                fill(20, 120, 40);
+                rect(0, 0.8 * height, width, 0.2 * height);
+
+                // Sol
+                fill(255, 210, 0);
+                circle(x_s, y_s, d_s);
+
+                // Luna
+                fill(255);
+                circle(x_l, y_l, d_l);
+
+                // Globo
+                fill(255, 80, 80);
+                circle(xG, yG, Sg);
+
+                stroke(60);
+                line(xG, yG + 0.5 * Sg, xG, yG + 0.5 * Sg + cuerda);
+                noStroke();
+
+                // Árbol (tronco + copa)
+                fill(120, 80, 40);
+                rect(0.15 * width - 0.5 * troncoW, 0.8 * height - troncoH, troncoW, troncoH);
+
+                fill(40, 140, 60);
+                circle(0.15 * width, 0.8 * height - troncoH - 0.3 * S, copaD);
+
+                // Coche
+
+                fill(240, 200, 0);
+                rect(xC - 0.5 * L, 0.75 * height - 0.85 * H, L, H, 0.1 * L);
+
+                fill(40);
+                circle(xC - 0.35 * L, 0.75 * height + 0.55 * H, wheelD);
+                circle(xC + 0.35 * L, 0.75 * height + 0.55 * H, wheelD);
+
+                // Movimiento: astros + cielos
+                x_s += v_s;
+                x_cs += v_s;
+
+                x_l += v_l;
+                x_cl += v_l;
+
+                // Movimiento del globo
+                yG -= vyG;
+
+                // Crecimiento del árbol
+                S += 0.0008 * height;
+                troncoW = 0.3 * S;
+                troncoH = 1.2 * S;
+                copaD = 1.1 * S;
+
+                // Movimiento del coche
+                xC += vxC;
+            }
+        </script>
+    </body>
+</html>
