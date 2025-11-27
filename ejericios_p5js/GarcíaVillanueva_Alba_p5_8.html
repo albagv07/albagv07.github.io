@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sistema Solar en p5.js</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            // Variables globales (comunes)
+            let centerX, centerY, sunSize, R1;
+
+            // Por planetas (repite para los 8)
+            let mercurioR, mercurioD, mercurioTheta, mercurioOmega;
+            let venusR, venusD, venusTheta, venusOmega;
+            let tierraR, tierraD, tierraTheta, tierraOmega;
+            let marteR, marteD, marteTheta, marteOmega;
+            let jupiterR, jupiterD, jupiterTheta, jupiterOmega;
+            let saturnoR, saturnoD, saturnoTheta, saturnoOmega;
+            let uranoR, uranoD, uranoTheta, uranoOmega;
+            let neptunoR, neptunoD, neptunoTheta, neptunoOmega;
+
+            function setup() {
+                createCanvas(500, 500);
+
+                // Centro del sistema 
+                centerX = width / 2;
+                centerY = height / 2;
+
+                // Escala
+                sunSize = 0.1 * min(width, height);
+                R1 = 0.05* min(width, height);
+
+                // Radios de los planetas (distancia al Sol)
+                mercurioR = 1 * R1;
+                venusR = 2 * R1;
+                tierraR = 3 * R1;
+                marteR= 4 * R1;
+                jupiterR = 5 * R1;
+                saturnoR = 6 * R1;
+                uranoR = 7 * R1;
+                neptunoR = 8 * R1;
+
+                // Diámetros de los planetas relativos al Sol
+                mercurioD = 0.1 * sunSize;
+                venusD = 0.15 * sunSize;
+                tierraD = 0.16 * sunSize;
+                marteD = 0.14 * sunSize;
+                jupiterD = 0.50 * sunSize;
+                saturnoD = 0.40 * sunSize;
+                uranoD = 0.20 * sunSize;
+                neptunoD = 0.28 * sunSize;
+
+                // Ángulos iniciales (en radianes)
+                mercurioTheta = 0;
+                venusTheta = PI / 5;
+                tierraTheta = PI / 4;
+                marteTheta = PI / 3;
+                jupiterTheta =  PI/ 2;
+                saturnoTheta = PI / 0.5 ;
+                uranoTheta = PI;
+                neptunoTheta = 0.5* PI;
+
+                // Velocidades angulares 
+                mercurioOmega = 0.030;
+                venusOmega = 0.012;
+                tierraOmega = 0.010;
+                marteOmega = 0.008;
+                jupiterOmega = 0.004;
+                saturnoOmega = 0.003;
+                uranoOmega = 0.002;
+                neptunoOmega = 0.0015;
+            }
+
+            function draw() {
+                // Fondo negro para el espacio
+                background(0);
+
+                // Sol en el centro
+                noStroke();
+                fill(255, 204, 0); // Color amarillo para el Sol
+                circle(centerX, centerY, sunSize); // Dibuja el Sol
+
+                // Dibujo los planetas
+                drawPlanet(mercurioR, mercurioD, mercurioTheta);
+                drawPlanet(venusR, venusD, venusTheta);
+                drawPlanet(tierraR, tierraD, tierraTheta);
+                drawPlanet(marteR, marteD, marteTheta);
+                drawPlanet(jupiterR, jupiterD, jupiterTheta);
+                drawPlanet(saturnoR, saturnoD, saturnoTheta);
+                drawPlanet(uranoR, uranoD, uranoTheta);
+                drawPlanet(neptunoR, neptunoD, neptunoTheta);
+
+                // Actualizo los ángulos de los planetas
+                mercurioTheta += mercurioOmega;
+                venusTheta += venusOmega;
+                tierraTheta += tierraOmega;
+                marteTheta += marteOmega;
+                jupiterTheta += jupiterOmega;
+                saturnoTheta += saturnoOmega;
+                uranoTheta += uranoOmega;
+                neptunoTheta += neptunoOmega;
+            }
+
+            // Función para dibujar un planeta
+            function drawPlanet(r, d, theta) {
+                let x = centerX + cos(theta) * r;
+                let y = centerY + sin(theta) * r;
+                fill(200);
+                circle(x, y, d);
+            }
+        </script>
+    </body>
+</html
