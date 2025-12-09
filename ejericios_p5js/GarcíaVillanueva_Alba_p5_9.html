@@ -1,0 +1,76 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Solar en p5.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Variables globales (comunes)
+        let centerX, centerY, sunSize, R1;
+        let tierraR, tierraD, tierraTheta, tierraOmega, tierraX, tierraY;
+        let lunaR, lunaD, lunaTheta, lunaOmega, lunaX, lunaY;
+
+        function setup() {
+            createCanvas(800, 800);
+
+            // Centro del lienzo
+            centerX = width / 2;
+            centerY = height / 2;
+
+            // Tamaño del sol
+            sunSize = 0.1 * min(width, height);
+            R1 = 0.05 * min(width, height);
+
+            // Tierra
+            tierraR = 5 * R1;
+            tierraD = 0.5 * sunSize;
+            tierraTheta = PI / 4;
+            tierraOmega = 0.010;
+
+            // Luna
+            lunaR = 0.60 * tierraD;
+            lunaD = 0.40 * tierraD;
+            lunaTheta = 0;
+            lunaOmega = 0.080;
+        }
+
+        function draw() {
+            background(10);
+
+            // Calcular las posiciones de la Tierra y la Luna antes de dibujarlas
+            tierraX = centerX + cos(tierraTheta) * tierraR;
+            tierraY = centerY + sin(tierraTheta) * tierraR;
+
+            lunaX = tierraX + cos(lunaTheta) * lunaR * 2;
+            lunaY = tierraY + sin(lunaTheta) * lunaR * 2;
+
+            // Dibujar Sol
+            fill(222, 230, 57);
+            noStroke();
+            circle(centerX, centerY, sunSize);
+
+            // Dibujar Tierra
+            fill(62, 113, 230);
+            noStroke();
+            circle(tierraX, tierraY, tierraD);
+
+            // Dibujar Luna
+            fill(165, 168, 176);
+            noStroke();
+            circle(lunaX, lunaY, lunaD);
+
+            // Actualizar los ángulos
+            tierraTheta += tierraOmega;
+            lunaTheta += lunaOmega;
+        }
+    </script>
+</body>
+</html>
