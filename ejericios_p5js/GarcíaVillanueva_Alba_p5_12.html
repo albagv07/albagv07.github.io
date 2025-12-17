@@ -1,0 +1,101 @@
+<html lang="es"><head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sistema Solar en p5.js</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            // Variables estado global
+            let xS, yS, dS, rS, vS;
+            let xL, yL, dL, rL, vL;
+            let dia, mes, anio;
+
+            function setup() {
+                createCanvas(300, 300);
+                dS = min(width, height) * 0.2;
+                rS = dS / 2;
+                yS = height / 4;
+                xS = -rS;
+                vS = width / 400;
+
+                dL = dS * 0.5;
+                rL = dL / 2;
+                yL = height / 3;
+                xL = -width - rL;
+                vL = vS;
+                
+                dia = 1;
+                mes = 3;
+                anio = 2008;
+            }
+
+            function draw() {
+            // Fondo del día
+            if (xS <= width + rS) {
+                background(0, 0, 255); // azul para el día
+            } else {
+                background(0); // negro para la noche
+            }
+
+            // Mostrar la luna solo si es de noche
+            if (xS > width + rS) {
+                noStroke();
+                fill(200);
+                circle(xL, yL, dL);
+            }
+
+            // Incrementar el día solo cuando el sol ha completado un ciclo
+            if (xS >= 2 * width + rS) {
+                dia += 1; // Incrementamos el día
+
+                // Reseteamos el día y el mes si es necesario
+                if (dia > 30) {
+                    dia = 1;
+                    mes += 1;
+                }
+
+                // Si el mes pasa de 12, reiniciamos el mes y cambiamos el año
+                if (mes > 12) {
+                    mes = 1;
+                    anio += 1;
+                }
+
+                // Reiniciar el sol y la luna para el siguiente ciclo
+                xS = -rS; // El sol vuelve a la izquierda
+                xL = -width - rL; // La luna también regresa a la izquierda
+            }
+
+            // Tamaño y posición del texto (fecha)
+            textSize(20);
+            fill(255);
+            text("Fecha: (" + dia + ") (" + mes + ") (" + anio + ")", 10, 20);
+
+            // Suelo
+            noStroke();
+            fill(20, 120, 40);
+            rect(0, 0.8 * height, width, 0.2 * height);
+
+            // Sol
+            noStroke();
+            fill(245, 234, 10);
+            circle(xS, yS, dS);
+
+            // Luna
+            noStroke();
+            fill(200);
+            circle(xL, yL, dL);
+
+            // Movimiento sincronizado
+            xS += vS; 
+            xL += vL;
+        }
+    </script>
+</body>
+</html>
