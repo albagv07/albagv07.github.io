@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Solar + Stickman (p5.js)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<script>
+/* ================= VARIABLES GLOBALES ================= */
+
+// Sol y luna
+let xS, yS, dS, rS, vS;
+let xL, yL, dL, rL, vL;
+
+// Fecha
+let dia, mes, anio;
+
+// Stickman
+let xP, yP;     // posición
+let S;          // tamaño
+let vP;         // velocidad horizontal
+let rHead;
+let bodyL;
+let armL;
+let legL;
+let hipY; 
+let shoulderY;
+let headY; 
+
+// Suelo y salto
+let groundY;
+let vY;
+let jumpV;
+let g;
+
+
+function setup() {
+    createCanvas(300, 300);
+
+    // Sol
+    dS = min(width, height) * 0.2;
+    rS = dS / 2;
+    yS = height / 4;
+    xS = -rS;
+    vS = width / 400;
+
+    // Luna
+    dL = dS * 0.5;
+    rL = dL / 2;
+    yL = height / 3;
+    xL = -width - rL;
+    vL = vS;
+
+    // Fecha
+    dia = 1;
+    mes = 3;
+    anio = 2008;
+
+    // Suelo
+    groundY = height * 0.8;
+
+    // Stickman
+    S = 0.12 * min(width, height);
+    xP = width * 0.25;
+    yP = groundY;
+    vP = width / 150;
+
+    // Salto
+    vY = 0;
+    jumpV = -0.03 * height;
+    g = 0.0016 * height;
+}
+
+
+function draw() {
+
+   
+    if (xS <= width + rS) {
+        background(80, 160, 255); // día
+    } else {
+        background(0); // noche
+    }
+
+    
+    noStroke();
+    fill(245, 234, 10);
+    circle(xS, yS, dS);
+
+    if (xS > width + rS) {
+        fill(200);
+        circle(xL, yL, dL);
+    }
+
+    //Movimiento del sol
+    xS += vS;
+    xL += vL;
+
+    //Cambio de dia
+    if (xS >= 2 * width + rS) {
+        xS = -rS;
+        xL = -width - rL;
+        dia++;
+
+        if (dia > 30) {
+            dia = 1;
+            mes++;
+        }
+        if (mes > 12) {
+            mes = 1;
+            anio++;
+        }
+    }
+
+    
+    fill(255);
+    textSize(16);
+    text("Fecha: (" + dia + ") (" + mes + ") (" + anio + ")", 10, 20);
+
+    //Suelo
+    fill(20, 120, 40);
+    rect(0, groundY, width, height - groundY);
+
+    
+    if (keyIsDown(LEFT_ARROW)) xP -= vP;
+    if (keyIsDown(RIGHT_ARROW)) xP += vP;
+
+    xP = constrain(xP, 0, width);
+
+    //Salto
+    vY += g;
+    yP += vY;
+
+    if (yP > groundY) {
+        yP = groundY;
+        vY = 0;
+    }
+
+    
+    rHead = 0.20 * S;
+    bodyL = 0.60 * S;
+    armL  = 0.45 * S;
+    legL  = 0.55 * S;
+
+    hipY = yP - legL;
+    shoulderY = hipY - bodyL;
+    headY = shoulderY - rHead;
+
+    stroke(255);
+    strokeWeight(0.06 * S);
+    noFill();
+
+    // Cabeza
+    circle(xP, headY, 2 * rHead);
+
+    // Tronco
+    line(xP, shoulderY, xP, hipY);
+
+    // Brazos
+    line(xP - 0.25*S, shoulderY, xP + 0.25*S, shoulderY);
+    line(xP - 0.25*S, shoulderY, xP - 0.25*S, shoulderY + armL);
+    line(xP + 0.25*S, shoulderY, xP + 0.25*S, shoulderY + armL);
+
+    // Piernas
+    line(xP, hipY, xP - 0.18*S, yP);
+    line(xP, hipY, xP + 0.18*S, yP);
+}
+
+
+function keyPressed() {
+    if (keyCode === UP_ARROW && yP === groundY) {
+        vY = jumpV;
+    }
+}
+</script>
+</body>
+</html>
