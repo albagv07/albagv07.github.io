@@ -35,8 +35,7 @@ let disparoActivo;
 //Salto
 let xO, yO, wO, hO, vO;
 
-//Puntos
-let puntos;
+
 
 function setup() {
   createCanvas(300, 300);
@@ -86,8 +85,7 @@ function setup() {
   xO = -wO;
   vO = random(0, 3);
 
-  // Puntos
-  puntos = 0;
+  
 }
 
 function draw() {
@@ -102,6 +100,9 @@ function draw() {
   
   dibujarSol();
   dibujarLuna();
+    
+  fill(255, 255, 0);
+  ellipse(xD, yD, tD);
 
 
   xS += vS;
@@ -140,9 +141,7 @@ function draw() {
         yD - tD/2 < yO + hO &&
         yD + tD/2 > yO) {
 
-      puntos++;
-      disparoActivo = false;
-
+      
    
       if (random() < 0.5) {
         xO = -wO;
@@ -170,7 +169,7 @@ function draw() {
 
   
   dibujarCalendario();
-  dibujarPuntos();
+
 }
 
 
@@ -227,11 +226,7 @@ function dibujarCalendario() {
   text("Fecha: " + dia + "/" + mes + "/" + anio, 10, 18);
 }
 
-function dibujarPuntos() {
-  fill(255);
-  textSize(14);
-  text("Puntos: " + puntos, 10, 36);
-}
+  
 
 
 
