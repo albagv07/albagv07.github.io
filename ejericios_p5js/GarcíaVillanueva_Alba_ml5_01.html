@@ -36,10 +36,19 @@
   <div>
    <h3> Explicación de cómo funciona el código</h3>
 
-   <p>  Este código permite detectar objetos en tiempo real usando la cámara del móvil. Cuando presionamos el botón para iniciar la cámara, el código accede a ella y comienza a capturar imágenes.
-        Luego, utiliza un modelo de inteligencia artificial para poder identificar objetos en lo que la cámara ve, como personas, mesas, sillas...
-        Estos objetos se resaltan con un cuadro y se muestra el nombre del objeto y la probabilidad de que la detención sea correcta.
-        Todo esto sucede en vivo, mientras el video se está reproduciendo.</p>
+   <p>  Este código crea una página web que activa la cámara del móvil o del ordenador y utiliza inteligencia artificial para detectar objetos en tiempo real.
+     En la parte superior del documento se carga la librería ml5.js, que es una biblioteca de JavaScript que simplifica el uso de modelos de aprendizaje automático en el navegador. 
+     En el cuerpo de la página se definen los elementos principales: un botón para iniciar la cámara, indicadores de estado y mejor detección, un video donde se muestra la imagen capturada y un canvas superpuesto que sirve para dibujar los rectángulos y etiquetas de los objetos detectados.
+     
+
+     En el bloque de JavaScript primero se obtienen referencias a los elementos del HTML.
+     Se definen variables globales. La función initCamera() solicita permiso para usar la cámara con getUserMedia, intentando usar la cámara trasera en móviles.
+     Cuando el vídeo está listo, ajusta el tamaño del canvas para que coincida exactamente con el tamaño real del vídeo. 
+     Después, la función draw() dibuja los rectángulos y etiquetas de cada objeto detectado, mientras que pickBest() recorre la lista de detecciones para quedarse con la que tenga mayor nivel de confianza.
+
+     Finalmente, cuando se pulsa el botón, se ejecuta un evento que inicia todo el proceso: primero activa la cámara, luego carga el modelo de detección, y cuando todo está listo comienza el bucle de detección.
+     Esta función llama continuamente al modelo para analizar cada fotograma del vídeo, dibuja los resultados en el canvas y actualiza el texto con la mejor detección encontrada.
+     El uso de requestAnimationFrame permite que el proceso se repita de forma fluida, creando así una detección de objetos en tiempo real directamente en el navegador.</p>
 
   </div>
 
@@ -141,3 +150,4 @@
 </body>
 
 </html>
+
